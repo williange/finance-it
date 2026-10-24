@@ -4,10 +4,11 @@ import { CreditCard, CreditCardObject } from "../CreditCard";
 import { Installment, InstallmentObject } from "../Installment";
 import { Transaction, TransactionObject } from "../Transaction";
 import { mapToObjects } from "../utils";
+import { BasicEntity } from "../General/BasicEntity";
 
-export class BankAccount {
+export class BankAccount implements BasicEntity {
   constructor(
-    private id: string,
+    public id: string,
     private name: string,
     private creditCards?: CreditCard[],
     private transactions?: Transaction[],
