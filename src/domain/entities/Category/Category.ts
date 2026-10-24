@@ -1,4 +1,4 @@
-import { checkEmptyString } from "../../validators/checkEmptyString";
+import { checkEmptyString } from "../../../validators/checkEmptyString";
 import { Budget } from "../Budget";
 import { CategoryObject } from "./CategoryObject";
 

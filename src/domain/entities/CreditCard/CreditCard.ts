@@ -1,6 +1,6 @@
-import { checkEmptyString } from "../../validators/checkEmptyString";
-import { checkInvalidNumberValue } from "../../validators/checkInvalidNumberValue";
-import { CreditCardObject } from "../CreditCard";
+import { checkEmptyString } from "../../../validators/checkEmptyString";
+import { checkInvalidNumberValue } from "../../../validators/checkInvalidNumberValue";
+import { CreditCardObject } from ".";
 import { Installment, InstallmentObject } from "../Installment";
 import { Transaction,TransactionObject } from "../Transaction";
 

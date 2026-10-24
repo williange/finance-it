@@ -1,3 +1,4 @@
+import { InstallmentObject } from "../Installment";
 import { TransactionObject } from "../Transaction";
 
 export type CreditCardObject = {
@@ -7,5 +8,5 @@ export type CreditCardObject = {
    totalLimit: number,
    availableLimit: number,
    transactions: TransactionObject[],
-   installments: TransactionObject[],
+   installments: InstallmentObject[],
 }

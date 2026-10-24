@@ -1,6 +1,6 @@
 import { BankAccountObject } from "../BankAccount";
 import { CreditCardObject } from "../CreditCard";
-import { UserObject } from "../User/";
+import { UserObject } from "../User";
 
 export type GeneralAccountObject = {
    id: string,

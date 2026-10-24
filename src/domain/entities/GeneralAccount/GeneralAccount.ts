@@ -1,5 +1,5 @@
-import { checkEmptyArray } from "../../validators/checkEmptyArray";
-import { checkEmptyString } from "../../validators/checkEmptyString";
+import { checkEmptyArray } from "../../../validators/checkEmptyArray";
+import { checkEmptyString } from "../../../validators/checkEmptyString";
 import { BankAccount, BankAccountObject } from "../BankAccount";
 import { CreditCard, CreditCardObject } from "../CreditCard";
 import { User, UserObject } from "../User";

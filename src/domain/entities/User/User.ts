@@ -1,4 +1,4 @@
-import { checkEmptyString } from "../../validators/checkEmptyString";
+import { checkEmptyString } from "../../../validators/checkEmptyString";
 import { BankAccount, BankAccountObject } from "../BankAccount";
 import { mapToObjects } from "../utils";
 import { UserObject } from "./UserObject";

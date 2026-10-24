@@ -1,4 +1,4 @@
-import { checkEmptyString } from "../../validators/checkEmptyString";
+import { checkEmptyString } from "../../../validators/checkEmptyString";
 import { BankAccountObject } from "./BankAccountObject";
 import { CreditCard, CreditCardObject } from "../CreditCard";
 import { Installment, InstallmentObject } from "../Installment";

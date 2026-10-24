@@ -1,5 +1,5 @@
-import { checkEmptyString } from "../../validators/checkEmptyString";
-import { checkInvalidNumberValue } from "../../validators/checkInvalidNumberValue";
+import { checkEmptyString } from "../../../validators/checkEmptyString";
+import { checkInvalidNumberValue } from "../../../validators/checkInvalidNumberValue";
 import { InstallmentObject } from "./InstallmentObject";
 
 export class Installment {

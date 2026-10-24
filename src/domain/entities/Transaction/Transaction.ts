@@ -1,5 +1,16 @@
-import { checkEmptyString } from "../../validators/checkEmptyString";
-import { checkInvalidNumberValue } from "../../validators/checkInvalidNumberValue";
+import { checkEmptyString } from "../../../validators/checkEmptyString";
+import { checkInvalidNumberValue } from "../../../validators/checkInvalidNumberValue";
+
+export enum TransactionType {
+  INCOME,
+  EXPENSE
+}
+
+export enum TransactionStatus {
+  PENDING,
+  COMPLETED,
+  CANCELLED
+}
 
 export class Transaction {
   constructor(
@@ -7,8 +18,8 @@ export class Transaction {
     private name: string,
     private value: number,
     private date: Date,
-    private type: string,
-    private status: string,
+    private type: TransactionType,
+    private status: TransactionStatus,
     private isRecurring?: boolean,
     private categoryId?: string,
   ) {

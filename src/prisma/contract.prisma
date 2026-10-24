@@ -1,21 +1,198 @@
 // use prisma-next
 
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   username  String?
-  name      String?
-  posts     Post[]
+  createdAt TimestamptzString @default(now())
+  updatedAt temporal.updatedAtString()
+
+  bankAccounts BankAccount[]
+
+  generalAccountMemberships GeneralAccountUser[]
+  generalAccountAdminOf     GeneralAccountAdmin[]
+}
+
+model GeneralAccount {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  users  GeneralAccountUser[]
+  admins GeneralAccountAdmin[]
+
+  bankAccounts BankAccount[]
+  creditCards  CreditCard[]
+
   createdAt TimestamptzString @default(now())
   updatedAt temporal.updatedAtString()
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+model GeneralAccountUser {
+  userId           Int
+  generalAccountId Int
+
+  user User @relation(fields: [userId], references: [id])
+  generalAccount GeneralAccount @relation(
+    fields: [generalAccountId],
+    references: [id]
+  )
+
+  @@id([userId, generalAccountId])
+}
+
+model GeneralAccountAdmin {
+  userId           Int
+  generalAccountId Int
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  generalAccount GeneralAccount @relation(fields: [generalAccountId], references: [id], onDelete: Cascade)
+
+  @@id([userId, generalAccountId])
+}
+
+model BankAccount {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  userId Int?
+  user   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  generalAccountId Int?
+  generalAccount GeneralAccount? @relation(
+    fields: [generalAccountId],
+    references: [id],
+    onDelete: SetNull
+  )
+
+  creditCards  CreditCard[]
+  transactions Transaction[]
+  installments Installment[]
+
+  createdAt TimestamptzString @default(now())
+  updatedAt temporal.updatedAtString()
+}
+
+model CreditCard {
+  id              Int     @id @default(autoincrement())
+  name            String
+  lastFourNumbers String
+  totalLimit      Decimal
+  availableLimit  Decimal
+
+  generalAccountId Int?
+  generalAccount GeneralAccount? @relation(
+    fields: [generalAccountId],
+    references: [id],
+    onDelete: SetNull
+  )
+
+  bankAccountId Int?
+  bankAccount BankAccount? @relation(
+    fields: [bankAccountId],
+    references: [id],
+    onDelete: SetNull
+  )
+
+  transactions Transaction[]
+  installments Installment[]
+
+  createdAt TimestamptzString @default(now())
+  updatedAt temporal.updatedAtString()
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  name        String
+  value       Decimal
+  date        TimestamptzString
+  type        TransactionType
+  status      TransactionStatus
+  isRecurring Boolean  @default(false)
+
+  categoryId Int?
+  category   Category? @relation(
+    fields: [categoryId],
+    references: [id],
+    onDelete: SetNull
+  )
+
+  bankAccountId Int?
+  bankAccount BankAccount? @relation(
+    fields: [bankAccountId],
+    references: [id],
+    onDelete: SetNull
+  )
+
+  creditCardId Int?
+  creditCard CreditCard? @relation(
+    fields: [creditCardId],
+    references: [id],
+    onDelete: SetNull
+  )
+
+  createdAt TimestamptzString @default(now())
+  updatedAt temporal.updatedAtString()
+}
+
+model Installment {
+  id              Int     @id @default(autoincrement())
+  name            String
+  fullValue       Decimal
+  quantity        Int
+  valuePerPayment Decimal
+
+  bankAccountId Int?
+  bankAccount BankAccount? @relation(
+    fields: [bankAccountId],
+    references: [id],
+    onDelete: SetNull
+  )
+
+  creditCardId Int?
+  creditCard CreditCard? @relation(
+    fields: [creditCardId],
+    references: [id],
+    onDelete: SetNull
+  )
+
+  createdAt TimestamptzString @default(now())
+  updatedAt temporal.updatedAtString()
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  budget       Budget?
+  transactions Transaction[]
+
+  createdAt TimestamptzString @default(now())
+  updatedAt temporal.updatedAtString()
+}
+
+model Budget {
+  id    Int     @id @default(autoincrement())
+  name  String
+  value Decimal
+
+  categoryId Int      @unique
+  category   Category @relation(
+    fields: [categoryId],
+    references: [id],
+    onDelete: Cascade
+  )
+
   createdAt TimestamptzString @default(now())
   updatedAt temporal.updatedAtString()
 }
